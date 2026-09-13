@@ -28,32 +28,41 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 [
   {
     "step": 1,
-    "query": "Kiểm tra giúp tôi tủ lạnh có đủ đồ để làm món trứng chiên cà chua không?",
+    "query": "Tôi muốn nấu phở bò tối nay, hãy kiểm tra xem tủ lạnh còn thiếu nguyên liệu gì và tự thêm phần còn thiếu vào danh sách đi chợ giúp tôi.",
     "action_type": "TOOL_EXECUTION",
     "tool_name": "check_fridge_inventory",
     "arguments": {
-      "dish_name": "trứng chiên cà chua"
+      "dish_name": "phở bò"
     },
     "observation": {
       "status": "SUCCESS",
-      "dish_name": "trứng chiên cà chua",
+      "dish_name": "phở bò",
       "required_ingredients": [
-        "trứng",
-        "cà chua",
+        "bánh phở",
+        "xương bò",
+        "thịt bò",
+        "hành tây",
+        "gừng",
+        "gia vị phở",
         "hành lá",
-        "nước mắm"
+        "rau sống"
       ],
-      "missing_ingredients": [],
-      "is_ready_to_cook": true
+      "missing_ingredients": [
+        "bánh phở",
+        "xương bò",
+        "thịt bò",
+        "gia vị phở"
+      ],
+      "is_ready_to_cook": false
     },
-    "latency_ms": 2496.06
+    "latency_ms": 2537.69
   },
   {
     "step": 2,
-    "query": "Kiểm tra giúp tôi tủ lạnh có đủ đồ để làm món trứng chiên cà chua không?",
+    "query": "Tôi muốn nấu phở bò tối nay, hãy kiểm tra xem tủ lạnh còn thiếu nguyên liệu gì và tự thêm phần còn thiếu vào danh sách đi chợ giúp tôi.",
     "action_type": "FINAL_ANSWER",
     "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Tủ lạnh đã có đủ nguyên liệu để nấu món 'trứng chiên cà chua'. Bạn có thể bắt tay vào nấu ngay!",
+    "output": "Để nấu món 'phở bò', tủ lạnh hiện đang thiếu: bánh phở, xương bò, thịt bò, gia vị phở. Bạn có muốn thêm các nguyên liệu này vào danh sách đi chợ không?",
     "latency_ms": 10.0
   }
 ]
@@ -66,7 +75,7 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 - [x] Đã điền API Key thật trong `.env` và xác nhận Agent chạy mượt mà trên LLM API thật (Gemini/OpenAI).
 - **Tổng số Test Cases đã chạy thành công:** 5 / 5 test cases.
 - **Số lượt gọi Tool qua MCP Server chính xác:** 4 lượt (TC02, TC03, TC04 mỗi cái 1 lượt. TC05 1 lượt gọi nhưng trả NOT_FOUND - vẫn tính là 1 lượt gọi tool hợp lệ; TC01 không gọi tool).
-- **Kết quả đẩy Repo nộp bài:** [ ] Đã Commit và Push mã nguồn thành công lên GitHub cá nhân.
+- **Kết quả đẩy Repo nộp bài:** [x] Đã Commit và Push mã nguồn thành công lên GitHub cá nhân.
 
 ---
 
