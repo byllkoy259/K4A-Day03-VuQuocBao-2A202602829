@@ -64,13 +64,13 @@ def run_baseline_chatbot(user_query: str, provider):
 def _summarize_observation(obs_data: dict) -> str:
     """Tổng hợp Final Answer từ dữ liệu Observation trả về bởi các Tool của đề tài Meal Planning"""
     status = obs_data.get("status")
- 
+
     if status == "NOT_FOUND":
         return obs_data.get("message", "Không tìm thấy thông tin phù hợp với yêu cầu.")
- 
+
     if status != "SUCCESS":
         return f"Phản hồi từ công cụ: {json.dumps(obs_data, ensure_ascii=False)}"
- 
+
     # Kết quả từ tool 'check_fridge_inventory'
     if "dish_name" in obs_data:
         dish = obs_data.get("dish_name", "")
@@ -81,7 +81,7 @@ def _summarize_observation(obs_data: dict) -> str:
             f"Để nấu món '{dish}', tủ lạnh hiện đang thiếu: {', '.join(missing)}. "
             f"Bạn có muốn thêm các nguyên liệu này vào danh sách đi chợ không?"
         )
- 
+
     # Kết quả từ tool 'add_to_shopping_list'
     if "shopping_list" in obs_data:
         added = obs_data.get("added_ingredients", [])
@@ -90,10 +90,10 @@ def _summarize_observation(obs_data: dict) -> str:
             f"Đã thêm {', '.join(added) if added else 'không có nguyên liệu mới nào'} vào danh sách đi chợ. "
             f"Danh sách hiện tại: {', '.join(current_list)}."
         )
- 
+
     if "message" in obs_data:
         return obs_data["message"]
- 
+
     return f"Đã hoàn tất xử lý qua MCP Server: {json.dumps(obs_data, ensure_ascii=False)}"
 
 
@@ -160,6 +160,7 @@ def run_react_agent(user_query: str, provider, mcp_server: MCPMealPlanningServer
                 "step": step,
                 "query": user_query,
                 "action_type": "TOOL_EXECUTION",
+                "thought": thought,
                 "tool_name": tool_name,
                 "arguments": arguments,
                 "observation": obs_data,

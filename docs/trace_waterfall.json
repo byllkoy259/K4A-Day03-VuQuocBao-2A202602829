@@ -4,13 +4,14 @@
     "query": "Chào bạn, bạn có thể giới thiệu ngắn gọn về Trợ lý Lập Kế hoạch Đi Chợ/Nấu Ăn của bạn không?",
     "action_type": "FINAL_ANSWER",
     "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
-    "output": "Chào bạn! Tôi là Trợ lý Lập Kế hoạch Đi Chợ/Nấu Ăn thông minh của bạn. Tôi có thể giúp bạn kiểm tra tủ lạnh xem có đủ nguyên liệu để nấu một món ăn cụ thể hay không, và nếu thiếu, tôi có thể thêm những nguyên liệu đó vào danh sách đi chợ của bạn. Hãy cho tôi biết bạn muốn nấu món gì nhé!",
-    "latency_ms": 2523.72
+    "output": "Chào bạn! Tôi là Trợ lý Lập Kế hoạch Đi Chợ/Nấu Ăn thông minh của bạn. Tôi có thể giúp bạn kiểm tra tủ lạnh xem có đủ nguyên liệu để nấu món ăn bạn muốn hay không, và nếu thiếu, tôi có thể thêm chúng vào danh sách đi chợ giúp bạn. Hãy cho tôi biết bạn muốn nấu món gì nhé!",
+    "latency_ms": 2729.47
   },
   {
     "step": 1,
     "query": "Hãy kiểm tra xem tủ lạnh của tôi có đủ nguyên liệu để nấu món phở bò không?",
     "action_type": "TOOL_EXECUTION",
+    "thought": "Gemini quyết định gọi công cụ 'check_fridge_inventory' với tham số: {\"dish_name\": \"phở bò\"}",
     "tool_name": "check_fridge_inventory",
     "arguments": {
       "dish_name": "phở bò"
@@ -36,7 +37,7 @@
       ],
       "is_ready_to_cook": false
     },
-    "latency_ms": 1852.57
+    "latency_ms": 1917.47
   },
   {
     "step": 2,
@@ -50,6 +51,7 @@
     "step": 1,
     "query": "Tủ lạnh đang thiếu bánh phở và xương bò, hãy thêm hai nguyên liệu này vào danh sách đi chợ giúp tôi.",
     "action_type": "TOOL_EXECUTION",
+    "thought": "Gemini quyết định gọi công cụ 'add_to_shopping_list' với tham số: {\"ingredients\": [\"bánh phở\", \"xương bò\"]}",
     "tool_name": "add_to_shopping_list",
     "arguments": {
       "ingredients": [
@@ -69,7 +71,7 @@
       ],
       "message": "Đã thêm 2 nguyên liệu vào danh sách đi chợ."
     },
-    "latency_ms": 2081.24
+    "latency_ms": 1888.41
   },
   {
     "step": 2,
@@ -83,6 +85,7 @@
     "step": 1,
     "query": "Tôi muốn nấu phở bò tối nay, hãy kiểm tra xem tủ lạnh còn thiếu nguyên liệu gì và tự thêm phần còn thiếu vào danh sách đi chợ giúp tôi.",
     "action_type": "TOOL_EXECUTION",
+    "thought": "Gemini quyết định gọi công cụ 'check_fridge_inventory' với tham số: {\"dish_name\": \"phở bò\"}",
     "tool_name": "check_fridge_inventory",
     "arguments": {
       "dish_name": "phở bò"
@@ -108,7 +111,7 @@
       ],
       "is_ready_to_cook": false
     },
-    "latency_ms": 2537.69
+    "latency_ms": 2491.04
   },
   {
     "step": 2,
@@ -122,6 +125,7 @@
     "step": 1,
     "query": "Hãy kiểm tra tủ lạnh xem có đủ nguyên liệu để nấu món 'bánh xèo Đà Lạt phiên bản đặc biệt' không?",
     "action_type": "TOOL_EXECUTION",
+    "thought": "Gemini quyết định gọi công cụ 'check_fridge_inventory' với tham số: {\"dish_name\": \"bánh xèo Đà Lạt phiên bản đặc biệt\"}",
     "tool_name": "check_fridge_inventory",
     "arguments": {
       "dish_name": "bánh xèo Đà Lạt phiên bản đặc biệt"
@@ -130,7 +134,7 @@
       "status": "NOT_FOUND",
       "message": "Không tìm thấy công thức cho món 'bánh xèo Đà Lạt phiên bản đặc biệt' trong cơ sở dữ liệu."
     },
-    "latency_ms": 1894.9
+    "latency_ms": 1915.09
   },
   {
     "step": 2,

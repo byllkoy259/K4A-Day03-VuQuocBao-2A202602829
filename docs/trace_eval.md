@@ -28,8 +28,9 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 [
   {
     "step": 1,
-    "query": "Tôi muốn nấu phở bò tối nay, hãy kiểm tra xem tủ lạnh còn thiếu nguyên liệu gì và tự thêm phần còn thiếu vào danh sách đi chợ giúp tôi.",
+    "query": "Hãy kiểm tra xem tủ lạnh của tôi có đủ nguyên liệu để nấu món phở bò không?",
     "action_type": "TOOL_EXECUTION",
+    "thought": "Gemini quyết định gọi công cụ 'check_fridge_inventory' với tham số: {\"dish_name\": \"phở bò\"}",
     "tool_name": "check_fridge_inventory",
     "arguments": {
       "dish_name": "phở bò"
@@ -55,11 +56,11 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
       ],
       "is_ready_to_cook": false
     },
-    "latency_ms": 2537.69
+    "latency_ms": 1917.47
   },
   {
     "step": 2,
-    "query": "Tôi muốn nấu phở bò tối nay, hãy kiểm tra xem tủ lạnh còn thiếu nguyên liệu gì và tự thêm phần còn thiếu vào danh sách đi chợ giúp tôi.",
+    "query": "Hãy kiểm tra xem tủ lạnh của tôi có đủ nguyên liệu để nấu món phở bò không?",
     "action_type": "FINAL_ANSWER",
     "thought": "Tổng hợp kết quả từ MCP Server thành công.",
     "output": "Để nấu món 'phở bò', tủ lạnh hiện đang thiếu: bánh phở, xương bò, thịt bò, gia vị phở. Bạn có muốn thêm các nguyên liệu này vào danh sách đi chợ không?",
