@@ -17,6 +17,18 @@ if sys.stdout.encoding != 'utf-8':
 
 load_dotenv()
 
+KNOWN_DISHES = [
+    "bánh xèo đà lạt phiên bản đặc biệt",
+    "phở bò",
+    "trứng chiên cà chua",
+    "gỏi cuốn",
+]
+ 
+KNOWN_INGREDIENTS = [
+    "bánh phở", "xương bò", "thịt bò", "hành tây", "gừng", "gia vị phở", "hành lá",
+    "rau sống", "trứng", "cà chua", "nước mắm", "bánh tráng", "tôm", "thịt heo", "bún"
+]
+
 class BaseLLMProvider:
     """Interface cơ sở cho các LLM Provider hỗ trợ Native Tool Calling"""
     def generate(self, prompt: str, system_prompt: str = "") -> str:
@@ -38,25 +50,29 @@ class MockOfflineProvider(BaseLLMProvider):
         prompt_lower = prompt.lower()
         
         # Mô phỏng nhận diện intent gọi Tool
-        if "sv2026001" in prompt_lower and "đặt lịch" in prompt_lower:
+        if "kiểm tra" in prompt_lower:
+            dish_name = next((d for d in KNOWN_DISHES if d in prompt_lower), "phở bò")
             return {
                 "type": "tool_call",
-                "tool_name": "schedule_appointment",
-                "arguments": {"student_id": "SV2026001", "datetime_str": "14:00 15/09/2026", "advisor_name": "PGS.TS Nguyễn Văn A"},
-                "thought": "Người dùng yêu cầu đặt lịch hẹn tư vấn cho sinh viên SV2026001. Tôi sẽ gọi tool schedule_appointment."
+                "tool_name": "check_fridge_inventory",
+                "arguments": {"dish_name": dish_name},
+                "thought": f"Người dùng muốn kiểm tra tủ lạnh cho món '{dish_name}'. Tôi sẽ gọi tool check_fridge_inventory."
             }
-        elif "sv2026001" in prompt_lower or "tra cứu" in prompt_lower:
+        elif "thêm" in prompt_lower and ("danh sách đi chợ" in prompt_lower or "mua" in prompt_lower):
+            found = [ing for ing in KNOWN_INGREDIENTS if ing in prompt_lower]
+            if not found:
+                found = ["bánh phở", "xương bò"]
             return {
                 "type": "tool_call",
-                "tool_name": "academic_query",
-                "arguments": {"student_id": "SV2026001"},
-                "thought": "Người dùng muốn tra cứu thông tin học vụ của sinh viên SV2026001. Tôi sẽ gọi tool academic_query."
+                "tool_name": "add_to_shopping_list",
+                "arguments": {"ingredients": found},
+                "thought": f"Người dùng muốn thêm {', '.join(found)} vào danh sách đi chợ. Tôi sẽ gọi tool add_to_shopping_list."
             }
         else:
             return {
                 "type": "text",
-                "content": f"[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-                "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool."
+                "content": "[Mock Agent Response]: Xin chào! Tôi là Trợ lý Lập Kế hoạch Đi Chợ/Nấu Ăn. Tôi có thể giúp bạn kiểm tra tủ lạnh còn thiếu gì để nấu một món ăn, và tự động thêm nguyên liệu còn thiếu vào danh sách đi chợ.",
+                "thought": "Câu hỏi chung/giới thiệu, trả lời trực tiếp không cần gọi Tool."
             }
 
 

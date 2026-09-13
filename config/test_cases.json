@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, bạn có thể giới thiệu ngắn gọn về Trợ lý Lập Kế hoạch Đi Chợ/Nấu Ăn của bạn không?",
+    "expected_behavior": "Chatbot trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy kiểm tra xem tủ lạnh của tôi có đủ nguyên liệu để nấu món phở bò không?",
+    "expected_behavior": "Agent nhận diện nhu cầu tra cứu, tự động phát sinh Tool Call 'check_fridge_inventory' với tên món 'phở bò'.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "action_request",
+    "question": "Tủ lạnh đang thiếu bánh phở và xương bò, hãy thêm hai nguyên liệu này vào danh sách đi chợ giúp tôi.",
+    "expected_behavior": "Agent tự động phát sinh Tool Call 'add_to_shopping_list' với đúng danh sách nguyên liệu 'bánh phở' và 'xương bò'.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Tôi muốn nấu phở bò tối nay, hãy kiểm tra xem tủ lạnh còn thiếu nguyên liệu gì và tự thêm phần còn thiếu vào danh sách đi chợ giúp tôi.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct: gọi 'check_fridge_inventory' để xác định nguyên liệu còn thiếu trước, sau đó dùng đúng kết quả đó gọi 'add_to_shopping_list' để thêm vào danh sách mua.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy kiểm tra tủ lạnh xem có đủ nguyên liệu để nấu món 'bánh xèo Đà Lạt phiên bản đặc biệt' không?",
+    "expected_behavior": "Agent nhận kết quả NOT_FOUND từ Tool 'check_fridge_inventory' vì món này không có trong cơ sở dữ liệu công thức, và đưa ra phản hồi lịch sự, chính xác không bịa đặt danh sách nguyên liệu.",
+    "complexity": "Medium"
+  }
+]

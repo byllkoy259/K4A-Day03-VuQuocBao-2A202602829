@@ -1,8 +1,8 @@
 # 📊 BÁO CÁO THU HOẠCH NGHIỆM THU BÀI LAB 3 (BƯỚC 3 — SUBMISSION ARTIFACT)
 
-> **Họ và Tên Học viên:** [Điền Họ và Tên]  
-> **Mã Sinh Viên / Mã Học viên:** [Điền MSSV]  
-> **Chủ đề Lựa chọn:** [Điền tên chủ đề đã chọn từ docs/DANH_SACH_DE_TAI.md hoặc Đề tài Mở]  
+> **Họ và Tên Học viên:** Vũ Quốc Bảo  
+> **Mã Sinh Viên / Mã Học viên:** 2A202602829  
+> **Chủ đề Lựa chọn:** Đề tài Mở - Trợ lý Lập Kế hoạch Đi Chợ / Nấu Ăn (Meal Planning Assistant)
 
 ---
 
@@ -10,11 +10,11 @@
 
 | Tiêu chí Đánh giá | Mức độ (1 - 5) | Giải trình chi tiết lý do chọn điểm |
 | :--- | :---: | :--- |
-| **1. Multi-step Reasoning** | / 5 | Bài toán có yêu cầu chia nhỏ nhiều bước suy luận nối tiếp nhau không? |
-| **2. Tool Interaction** | / 5 | Hệ thống có cần kết nối với MCP Server / Cơ sở dữ liệu bên ngoài không? |
-| **3. Dynamic Decision** | / 5 | Bước tiếp theo có phụ thuộc vào kết quả quan sát bước trước không? |
-| **4. Long Horizon Goal** | / 5 | Hệ thống có phải giữ mục tiêu xuyên suốt qua nhiều lượt xử lý không? |
-| **TỔNG ĐIỂM AGENTIC FIT** | **/ 20** | *Nếu tổng điểm > 12/20: Bài toán rất phù hợp triển khai Agentic System.* |
+| **1. Multi-step Reasoning** | 4 / 5 | Agent phải so khớp nguyên liệu đang có trong tủ lạnh với công thức món người dùng muốn nấu trước khi quyết định nguyên liệu nào cần thêm vào danh sách đi chợ. |
+| **2. Tool Interaction** | 3 / 5 | Hệ thống cần 2 tool: check_fridge_inventory (tra cứu nguyên liệu hiện có) và add_to_shopping_list (hành động ghi nhận nguyên liệu cần mua). Không cần kết nối MCP Server hay CSDL ngoài phức tạp, dữ liệu có thể mock bằng JSON. |
+| **3. Dynamic Decision** | 4 / 5 | Bước tiếp theo phụ thuộc trực tiếp vào kết quả tra cứu: nếu tủ lạnh đủ nguyên liệu thì không cần thêm gì; nếu thiếu, Agent phải tự xác định thiếu món gì và có thể đề xuất món thay thế dùng nguyên liệu sẵn có thay vì máy móc thêm mọi thứ vào danh sách. |
+| **4. Long Horizon Goal** | 2 / 5 | Mỗi lượt lập kế hoạch bữa ăn tương đối độc lập; Agent không bắt buộc phải giữ mục tiêu xuyên suốt qua nhiều lượt xử lý (có thể mở rộng bằng cách nhớ danh sách đã mua lần trước, nhưng không phải yêu cầu bắt buộc của bản demo). |
+| **TỔNG ĐIỂM AGENTIC FIT** | **13 / 20** | *Nếu tổng điểm > 12/20: Bài toán rất phù hợp triển khai Agentic System.* |
 
 ---
 
@@ -28,20 +28,33 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 [
   {
     "step": 1,
+    "query": "Kiểm tra giúp tôi tủ lạnh có đủ đồ để làm món trứng chiên cà chua không?",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "tool_name": "check_fridge_inventory",
     "arguments": {
-      "student_id": "SV2026001"
+      "dish_name": "trứng chiên cà chua"
     },
     "observation": {
       "status": "SUCCESS",
-      "student_id": "SV2026001",
-      "data": {
-        "full_name": "Nguyễn Văn An",
-        "gpa": 3.85
-      }
+      "dish_name": "trứng chiên cà chua",
+      "required_ingredients": [
+        "trứng",
+        "cà chua",
+        "hành lá",
+        "nước mắm"
+      ],
+      "missing_ingredients": [],
+      "is_ready_to_cook": true
     },
-    "latency_ms": 120.5
+    "latency_ms": 2496.06
+  },
+  {
+    "step": 2,
+    "query": "Kiểm tra giúp tôi tủ lạnh có đủ đồ để làm món trứng chiên cà chua không?",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Tủ lạnh đã có đủ nguyên liệu để nấu món 'trứng chiên cà chua'. Bạn có thể bắt tay vào nấu ngay!",
+    "latency_ms": 10.0
   }
 ]
 ```
@@ -50,9 +63,9 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 
 ## 3. TỔNG KẾT KẾT QUẢ NGHIỆM THU & NỘP BÀI
 
-- [ ] Đã điền API Key thật trong `.env` và xác nhận Agent chạy mượt mà trên LLM API thật (Gemini/OpenAI).
-- **Tổng số Test Cases đã chạy thành công:** ___ / 5 test cases.
-- **Số lượt gọi Tool qua MCP Server chính xác:** ___ lượt.
+- [x] Đã điền API Key thật trong `.env` và xác nhận Agent chạy mượt mà trên LLM API thật (Gemini/OpenAI).
+- **Tổng số Test Cases đã chạy thành công:** 5 / 5 test cases.
+- **Số lượt gọi Tool qua MCP Server chính xác:** 4 lượt (TC02, TC03, TC04 mỗi cái 1 lượt. TC05 1 lượt gọi nhưng trả NOT_FOUND - vẫn tính là 1 lượt gọi tool hợp lệ; TC01 không gọi tool).
 - **Kết quả đẩy Repo nộp bài:** [ ] Đã Commit và Push mã nguồn thành công lên GitHub cá nhân.
 
 ---
